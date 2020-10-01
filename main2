@@ -1,0 +1,61 @@
+import pygame
+import numpy as np
+from pygame.draw import *
+
+pygame.init()
+
+FPS = 100
+screen = pygame.display.set_mode((600, 400))
+
+rect(screen, (0, 255, 255), (0, 0, 600, 200))
+rect(screen, (127, 255, 0), (0, 200, 600, 200))
+
+rect(screen, (184, 134, 11), (50, 170, 150, 100))
+rect(screen, (0, 0, 0), (50, 170, 150, 100), 1)
+rect(screen, (175, 238, 238), (100, 200, 50, 40))
+rect(screen, (139, 69, 19), (100, 200, 50, 40), 4)
+polygon(screen, (254, 0, 0), [(50, 170), (125, 120),
+                              (200, 170), (50, 170)])
+
+for i in range(4):
+    circle(screen, (255, 255, 255), (300 - 20 * i, 50), 20)
+    circle(screen, (220, 220, 220), (300 - 20 * i, 50), 20, 1)
+for i in range(3):
+    circle(screen, (255, 255, 255), (290 - 20 * i, 30), 20)
+    circle(screen, (220, 220, 220), (290 - 20 * i, 30), 20, 1)
+
+rect(screen, (0, 0, 0), (400, 180, 15, 70))
+for i in range(2):
+    circle(screen, (0, 250, 0), (415 - 20 * i, 90), 20)
+    circle(screen, (0, 0, 0), (415 - 20 * i, 90), 20, 1)
+for k in range(3):
+    circle(screen, (0, 250, 0), (425 - 20 * k, 120), 20)
+    circle(screen, (0, 0, 0), (425 - 20 * k, 120), 20, 1)
+for i in range(2):
+    circle(screen, (0, 250, 0), (415 - 20 * i, 140), 20)
+    circle(screen, (0, 0, 0), (415 - 20 * i, 140), 20, 1)
+for k in range(3):
+    circle(screen, (0, 250, 0), (425 - 20 * k, 170), 20)
+    circle(screen, (0, 0, 0), (425 - 20 * k, 170), 20, 1)
+
+
+for i in range(37):
+    c = i * np.pi / 36
+    polygon(screen, (255, 255, 0), [(int(500 + 35 * np.cos(c)),
+                                    int(50 - 35 * np.sin(c))),
+                                    (int(500 + 35 * np.cos(np.pi * 2 / 3 + c)),
+                                    int(50 - 35 * np.sin(np.pi * 2 / 3 + c))),
+                                    (int(500 + 35 * np.cos(np.pi * 4 / 3 + c)),
+                                    int(50 - 35 * np.sin(np.pi * 4 / 3 + c)))])
+
+pygame.display.update()
+clock = pygame.time.Clock()
+finished = False
+
+while not finished:
+    clock.tick(FPS)
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            finished = True
+
+pygame.quit()

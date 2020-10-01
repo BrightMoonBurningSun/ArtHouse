@@ -1,0 +1,80 @@
+import pygame
+import numpy as np
+from pygame.draw import *
+
+pygame.init()
+
+FPS = 100
+screen = pygame.display.set_mode((600, 400))
+screen.fill((150, 150, 150))
+
+rect(screen, (127, 255, 0), (0, 200, 600, 200))
+rect(screen, (0, 255, 255), (0, 0, 600, 200))
+
+
+def house(x, y, base_length, base_height, k):
+    rect(screen, (184, 134, 11), (x, y, base_length * k, base_height * k))
+    rect(screen, (0, 0, 0), (x, y, base_length * k, base_height * k), k)
+    rect(screen, (175, 238, 238), (x + base_length * k / 3, y + base_height * k / 3,
+                                   base_length * k / 3, base_height * k / 3))
+    rect(screen, (139, 69, 19), (x + base_length * k / 3, y + base_height * k / 3,
+                                 base_length * k / 3, base_height * k / 3), 4 * k)
+    polygon(screen, (254, 0, 0), [(x, y), (x + base_length * k / 2, y - 70 * k),
+                                  (x + base_length * k, y), (x, y)])
+
+
+def tree(x, y, base_length, k):
+    rect(screen, (0, 0, 0), (x, y, base_length * k, 5 * base_length * k))
+    for i in range(2):
+        circle(screen, (0, 250, 0), (x + 20 * i * k, y - 90 * k), 20 * k)
+        circle(screen, (0, 0, 0), (x + 20 * i * k, y - 90 * k), 20 * k, k)
+    for j in range(3):
+        circle(screen, (0, 250, 0), (x + 10 * k - 20 * (1 - j) * k, y - 60 * k), 20 * k)
+        circle(screen, (0, 0, 0), (x + 10 * k - 20 * (1 - j) * k, y - 60 * k), 20 * k, k)
+    for i in range(2):
+        circle(screen, (0, 250, 0), (x + 20 * i * k, y - 40 * k), 20 * k)
+        circle(screen, (0, 0, 0), (x + 20 * i * k, y - 40 * k), 20 * k, k)
+    for j in range(3):
+        circle(screen, (0, 250, 0), (x + 10 * k - 20 * (1 - j) * k, y - 10 * k), 20 * k)
+        circle(screen, (0, 0, 0), (x + 10 * k - 20 * (1 - j) * k, y - 10 * k), 20 * k, k)
+
+
+def cloud(x, y, k):
+    for i in range(4):
+        circle(screen, (255, 255, 255), (x - 20 * k * i, y), 20 * k)
+        circle(screen, (220, 220, 220), (x - 20 * k * i, y), 20 * k, k)
+    for i in range(3):
+        circle(screen, (255, 255, 255), (x - 20 * k * (i + 1) + 10 * k, y - 20 * k), 20 * k)
+        circle(screen, (220, 220, 220), (x - 20 * k * (i + 1) + 10 * k, y - 20 * k), 20 * k, k)
+
+
+def sun(x, y):
+    for i in range(37):
+        c = i * np.pi / 36
+        polygon(screen, (255, 255, 0), [(int(x + 35 * np.cos(c)),
+                                         int(y - 35 * np.sin(c))),
+                                        (int(x + 35 * np.cos(np.pi * 2 / 3 + c)),
+                                         int(y - 35 * np.sin(np.pi * 2 / 3 + c))),
+                                        (int(x + 35 * np.cos(np.pi * 4 / 3 + c)),
+                                         int(y - 35 * np.sin(np.pi * 4 / 3 + c)))])
+
+sun(50, 45)
+cloud(200, 100, 1)
+cloud(360, 50, 1)
+cloud(550, 90, 2)
+tree(500, 220, 15, 2)
+tree(160, 200, 15, 1)
+house(300, 250, 70, 40, 3)
+house(80, 235, 70, 40, 1)
+
+pygame.display.update()
+clock = pygame.time.Clock()
+finished = False
+
+while not finished:
+    clock.tick(FPS)
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            finished = True
+
+pygame.quit()
